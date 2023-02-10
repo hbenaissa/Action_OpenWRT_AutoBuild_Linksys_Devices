@@ -100,12 +100,12 @@ env:
   DELETE_DUPLICATES: false
 ### --------------------------- ###
   UPLOAD_BUILD_LOGS: true
-  UPLOAD_KMODS: true
-  UPLOAD_PACKAGES: true
+  UPLOAD_KMODS: false
+  UPLOAD_PACKAGES: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
-  TARGZIP_PACKAGES: true
+  TARGZIP_PACKAGES: false
 ### --------------------------- ###
   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
   BRANCH_STABLE: stable
@@ -113,16 +113,16 @@ env:
   ### --------------------------- ###
   # SOURCE_DIRECTORY_A: openwrt/bin/packages/$PKG_ARCH
   # SOURCE_DIRECTORY_B: $BIN_DIR/kmods/$KMOD_DIR
-  DESTINATION_GITHUB_USERNAME: DevOpenWRT-Router
+  DESTINATION_GITHUB_USERNAME: hbenaissa
   DESTINATION_REPOSITORY_NAME: Linksys_OpenWRT_Releases
   USER_EMAIL: github-actions[bot]@users.noreply.github.com
   USER_NAME: github-actions[bot]
-  DESTINATION_REPOSITORY_USERNAME: DevOpenWRT-Router
+  DESTINATION_REPOSITORY_USERNAME: hbenaissa
   TARGET_BRANCH: ${{ github.event.repository.default_branch }}
   COMMIT_MESSAGE: 'Updated: $D'
   TARGET_DIRECTORY_A: packages
   TARGET_DIRECTORY_B: kmods/$KMOD_DIR
-  TZ: America/New_York
+  TZ: Europe/Paris
 ### ----------------------------------------------------------------- ###
 ### ----------------------------------------------------------------- ###
 jobs:
@@ -1037,7 +1037,7 @@ jobs:
         uses: softprops/action-gh-release@master
         if: steps.tag.outputs.status == 'success' && steps.compile.outcome == 'success' && !cancelled()
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.PERSONAL_GITHUB_TOKEN }}'
         with:
           tag_name: '${{ steps.tag.outputs.release_tag }}'
           body_path: release.txt
@@ -1055,7 +1055,7 @@ jobs:
           keep_latest: 10
           delete_tags: true
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.PERSONAL_GITHUB_TOKEN }}'
 ### ----------------------------------------------------------------- ###
       - name: PreCache - Clean
         run: |
