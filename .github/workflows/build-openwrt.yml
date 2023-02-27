@@ -709,6 +709,7 @@ jobs:
         continue-on-error: true
         run: |
           cd openwrt
+          mkdir -p /workdir/openwrt/staging_dir/host/bin/opkg
           echo -e "$(nproc) thread compile"
           let Make_Process=$(nproc)+2
           make -j${Make_Process} target/install || make -j${Make_Process} target/install V=s
